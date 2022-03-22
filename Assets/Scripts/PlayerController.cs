@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class PlayerController : Singleton<PlayerController>
+public class PlayerController : MonoBehaviour
 {
     public static PlayerController playerControllerInstance;
     
@@ -12,16 +12,19 @@ public class PlayerController : Singleton<PlayerController>
     private float speed;
     private Vector3 direction;
 
-    private float xCount = 0;
-    private float yCount = 1;
-    private float zCount = 0;
+    [SerializeField]
+    private bool canMove;
+
+    private float xCount = 0f;
+    private float yCount = 1f;
+    private float zCount = 0f;
 
 
     private void Start()
     {
         playerInputActions = new PlayerInput();
         playerInputActions.Enable();
-        transform.position = new Vector3(xCount, yCount, zCount);
+        canMove = true;
     }
 
 
@@ -30,50 +33,66 @@ public class PlayerController : Singleton<PlayerController>
         direction = playerInputActions.Player.Movement.ReadValue<Vector2>();
     }
 
-    //use bezier interpolation
 
+
+    //use bezier interpolation
     public void Move(InputAction.CallbackContext context)
     {
-            if(direction.x == 1)
+        if(direction.x == 1 && canMove)
+        {
+            transform.position = new Vector3(xCount + 1, yCount - 1, zCount);
+            this.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            xCount++;
+            yCount--;
+            if(xCount > 6 || yCount < -6)
             {
-                transform.position = new Vector3(xCount + 1, yCount - 1, zCount);
-                xCount++;
-                yCount--;
-                if(xCount > 6 || yCount < -5)
-                {
-                    Debug.Log("Kill Player");
-                }
+                Debug.Log("Kill Player");
             }
-            if(direction.x == -1)
-            {
-                transform.position = new Vector3(xCount - 1, yCount + 1, zCount);
-                xCount--;
-                yCount++;
-                if (yCount > 6 || xCount < 0)
-                {
-                    Debug.Log("Kill Player");
-                }
-            }
-            if (direction.y == 1)
-            {
-                transform.position = new Vector3(xCount, yCount + 1, zCount + 1);
-                yCount++;
-                zCount++;
-                if (yCount > 1 || zCount > 0)
-                {
-                    Debug.Log("Kill Player");
-                }
-            }
-            if(direction.y == -1)
-            {
-                transform.position = new Vector3(xCount, yCount - 1, zCount - 1);
-                yCount--;
-                zCount--;
-                if (yCount < -5 || zCount < -6)
-                {
-                    Debug.Log("Kill Player");
-                }
         }
+        else if(direction.x == -1 && canMove)
+        {
+            transform.position = new Vector3(xCount - 1, yCount + 1, zCount);
+            this.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+
+            xCount--;
+            yCount++;
+            if (yCount > 1 || xCount < 0)
+            {
+                Debug.Log("Kill Player");
+            }
+        }
+        else if (direction.y == 1 && canMove)
+        {
+            transform.position = new Vector3(xCount, yCount + 1, zCount + 1);
+            this.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+
+            yCount++;
+            zCount++;
+            if (yCount > 1 || zCount > 0)
+            {
+                Debug.Log("Kill Player");
+            }
+
+        }
+        else if(direction.y == -1 && canMove)
+        {
+            transform.position = new Vector3(xCount, yCount - 1, zCount - 1);
+            this.transform.rotation = Quaternion.Euler(0f,90f,0f);
+            yCount--;
+            zCount--;
+            if (yCount < -5 || zCount < -6)
+            {
+                Debug.Log("Kill Player");
+            }
+        }
+    }
+
+
+    IEnumerator MoveDelay()
+    {
+        canMove = false;
+        yield return new WaitForSeconds(1f);
+        canMove = true;
     }
 }
 
