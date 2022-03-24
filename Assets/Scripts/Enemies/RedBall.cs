@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedBall : EnemyBall
+public class RedBall : Ball
 {
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-
+        GameManager.Instance.LoseLife();
     }
-
 }

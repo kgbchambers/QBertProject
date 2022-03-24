@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
 
     //Game setup prefabs
@@ -16,7 +16,12 @@ public class GameManager : MonoBehaviour
     private int curLevel = 0;
     private int score = 0;
     private int highScore = 0;
+    private int levelBlockColors;
 
+    private Vector3 spawnPoint = new Vector3(0f, 1f, 0f);
+
+    //array of integers that corresponds to a spaces color level (ie: 0 = not touched by Qbert, 1 = first color shift, etc)
+    private Dictionary<Vector3, int> blockValues;
 
     //UI Text Objects to update
     public Text scoreText;
@@ -44,18 +49,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    private void ResetGame()
-    {
-        lives = 3;
-        curLevel = 1;
-        score = 0;
-    }
-
-
     private void BuildLevel()
     {
-        Instantiate(playerPref, new Vector3(0f, 1f, 0f), Quaternion.identity);
+        Instantiate(playerPref, spawnPoint, Quaternion.identity);
 
         for (int y = 0; y > -7; y--)
         {
@@ -65,6 +61,29 @@ public class GameManager : MonoBehaviour
                 Instantiate(levelBlockPref, new Vector3(x, y, z), Quaternion.identity);
             }
         }
+    }
+
+
+    private void ResetLevel()
+    {
+        //Time.timeScale = 0f;
+        playerPref.transform.position = spawnPoint;
+        EnemyManager.Instance.WipeEnemies();
+    }
+
+    private void ResetGame()
+    {
+        lives = 3;
+        curLevel = 1;
+        score = 0;
+    }
+
+
+    public void LoseLife()
+    {
+        lives--;
+        UpdateUI();
+        ResetLevel();
     }
 
 }

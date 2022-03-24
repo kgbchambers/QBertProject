@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
-    public static PlayerController playerControllerInstance;
-    
     private PlayerInput playerInputActions;
     private float speed;
     private Vector3 direction;
@@ -46,7 +44,7 @@ public class PlayerController : MonoBehaviour
             yCount--;
             if(xCount > 6 || yCount < -6)
             {
-                Debug.Log("Kill Player");
+                GameManager.Instance.LoseLife();
             }
         }
         else if(direction.x == -1 && canMove)
@@ -58,7 +56,7 @@ public class PlayerController : MonoBehaviour
             yCount++;
             if (yCount > 1 || xCount < 0)
             {
-                Debug.Log("Kill Player");
+                GameManager.Instance.LoseLife();
             }
         }
         else if (direction.y == 1 && canMove)
@@ -70,7 +68,7 @@ public class PlayerController : MonoBehaviour
             zCount++;
             if (yCount > 1 || zCount > 0)
             {
-                Debug.Log("Kill Player");
+                GameManager.Instance.LoseLife();
             }
 
         }
@@ -82,7 +80,7 @@ public class PlayerController : MonoBehaviour
             zCount--;
             if (yCount < -5 || zCount < -6)
             {
-                Debug.Log("Kill Player");
+                GameManager.Instance.LoseLife();
             }
         }
     }
