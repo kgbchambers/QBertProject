@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class RedBall : Ball
 {
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        GameManager.Instance.LoseLife();
+        if(other.tag == "Player")
+            GameManager.Instance.LoseLife();
     }
 }

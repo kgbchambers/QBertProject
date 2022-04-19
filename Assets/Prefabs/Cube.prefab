@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1364069452440156117}
   - component: {fileID: 1364069452440156116}
   - component: {fileID: 1364069452440156115}
+  - component: {fileID: 7063322562270075446}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,6 +97,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7063322562270075446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364069452440156114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7943023727f083e44857908826c78ff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 0
+  curLevel: 0
+  plane: {fileID: 8197836111364799396}
+  materialList:
+  - {fileID: 2100000, guid: 7660120fb3b882249807d08bd628f8da, type: 2}
+  - {fileID: 2100000, guid: 1ba528f55663e9d4893a5534eef3fcfb, type: 2}
+  - {fileID: 2100000, guid: 8b23d691c113b3a4992d5532c8c954ce, type: 2}
+  - {fileID: 2100000, guid: 4c846a5c8ddfc1749bcec034523be9d9, type: 2}
 --- !u!1 &8197836111364799396
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +131,7 @@ GameObject:
   - component: {fileID: 8197836111364799399}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

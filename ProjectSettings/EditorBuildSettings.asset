@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Qbert.unity
+    guid: 62a1a495269a8164e8bca23d403df5f8
   m_configObjects: {}
